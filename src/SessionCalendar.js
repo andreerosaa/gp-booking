@@ -4,6 +4,8 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Modal from 'react-modal';
 
+const today = new Date();
+
 const localizer = momentLocalizer(moment);
 
 const SessionCalendar = () => {
@@ -49,6 +51,12 @@ const SessionCalendar = () => {
 	return (
 		<div>
 			<Calendar
+				min={
+					new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8)
+				}
+				max={
+					new Date(today.getFullYear(), today.getMonth(), today.getDate(), 17)
+				}
 				localizer={localizer}
 				events={sessions}
 				startAccessor='start'
