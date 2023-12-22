@@ -4,11 +4,10 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Modal from 'react-modal';
 
-const today = new Date();
-
-const localizer = momentLocalizer(moment);
-
 const SessionCalendar = () => {
+	const today = new Date();
+	const localizer = momentLocalizer(moment);
+
 	const [userBookings, setUserBookings] = useState([]);
 	const [sessions, setSessions] = useState([]);
 	const [selectedSession, setSelectedSession] = useState(null);
@@ -69,10 +68,6 @@ const SessionCalendar = () => {
 		setSessions(recurringSessions);
 	};
 
-	useEffect(() => {
-		generateRecurringSessions();
-	}, []);
-
 	const handleBooking = (event) => {
 		const clickedSession = sessions.find((session) => session.id === event.id);
 
@@ -97,15 +92,15 @@ const SessionCalendar = () => {
 		handleModalClose();
 	};
 
+	useEffect(() => {
+		generateRecurringSessions();
+	}, []);
+
 	return (
-		<div>
+		<div className='Calendar'>
 			<Calendar
-				min={
-					new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8)
-				}
-				max={
-					new Date(today.getFullYear(), today.getMonth(), today.getDate(), 20)
-				}
+				min={new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8)}
+				max={new Date(today.getFullYear(), today.getMonth(), today.getDate(), 20)}
 				defaultView='week'
 				views={['week', 'day']}
 				localizer={localizer}
@@ -122,9 +117,7 @@ const SessionCalendar = () => {
 				contentLabel='Reservation Modal'
 			>
 				<h2>Reservation Details</h2>
-				<p>
-					Session: {selectedSession && selectedSession.start.toLocaleString()}
-				</p>
+				<p>Session: {selectedSession && selectedSession.start.toLocaleString()}</p>
 
 				<label>
 					Name:
@@ -140,9 +133,7 @@ const SessionCalendar = () => {
 					<input
 						type='text'
 						value={userData.phoneNumber}
-						onChange={(e) =>
-							setUserData({ ...userData, phoneNumber: e.target.value })
-						}
+						onChange={(e) => setUserData({ ...userData, phoneNumber: e.target.value })}
 					/>
 				</label>
 
